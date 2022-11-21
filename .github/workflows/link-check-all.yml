@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - development
+      - main
   pull_request:
 
 permissions:
@@ -28,16 +28,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup node
         uses: actions/setup-node@v3
-               with:    
-                   node-version: 16.13.x              
-                   cache: "npm"
-+                  # The action defaults to search for the dependency file
-+                  # (package-lock.json or yarn.lock) in the repository root, and uses
-+                  # its hash as a part of the cache key.
-+                  # https://github.com/actions/setup-node#caching-packages-dependencies
-+                  cache-dependency-path: "./blog/package-lock.json"     
+
+        with:
+          node-version: 16.13.x
+          cache: npm
+          cache-dependency-path: "./blog/package-lock.json"
 
       - name: Install
         run: npm ci
