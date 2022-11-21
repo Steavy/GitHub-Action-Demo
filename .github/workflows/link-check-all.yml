@@ -28,8 +28,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
+               with:                  
+                   cache: "npm"
++                  # The action defaults to search for the dependency file
++                  # (package-lock.json or yarn.lock) in the repository root, and uses
++                  # its hash as a part of the cache key.
++                  # https://github.com/actions/setup-node#caching-packages-dependencies
++                  cache-dependency-path: "./blog/package-lock.json"
 
         with:
           node-version: 16.13.x
