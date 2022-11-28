@@ -10,30 +10,24 @@ on:
     branches:
       - main
   pull_request:
-
-permissions:
-  contents: read
-  # Needed for the 'trilom/file-changes-action' action
-  pull-requests: read
-
-# This allows a subsequently queued workflow run to interrupt previous runs
-concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
-  cancel-in-progress: true
+      - main
 
 jobs:
   check-links:
-    runs-on: ${{ fromJSON('["ubuntu-latest", "self-hosted"]')[github.repository == 'github/docs-internal'] }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup node
+     runs-on: ubuntu-latest
+    
+     strategy:
+       matrix:
+         node-version: [14.x, 16.x, 18.x]
+         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+         
+     steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 16.13.x
-          cache: npm
-          cache-dependency-path: '**/package-lock.json'
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
       - name: Install
         run: npm ci
