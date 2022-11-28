@@ -5,12 +5,10 @@ name: 'Link Checker: All English'
 # **Who does it impact**: Docs content.
 
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
-      - main
+    branches: [ "main" ]
 
 jobs:
   check-links:
