@@ -6,9 +6,9 @@ name: 'Link Checker: All English'
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "development" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "development" ]
 
 jobs:
   check-links:
